@@ -4,6 +4,7 @@ import { AppBar, Toolbar, IconButton, Typography, FormControl, InputLabel, Selec
 import MenuIcon from '@mui/icons-material/Menu';
 import { getReps, getSenators } from './apiUtil';
 import { Container } from '@mui/system';
+import ContactInfo from './components/ContactInfo';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -47,24 +48,33 @@ function App() {
         <CircularProgress sx={{ display: 'block', margin: '40vh auto 0 auto' }} />
         :
         <Container maxWidth="lg">
-          <Typography variant='h2' sx={{ marginTop: '20px' }}>Gov Site</Typography>
-          <FormControl fullWidth sx={{ marginBottom: '20px', marginTop: '10px' }}>
+          <FormControl fullWidth sx={{ marginBottom: '20px', marginTop: '40px' }}>
             <InputLabel>Who would you like to contact?</InputLabel>
             <Select
               value={repType}
               label="Who would you like to contact?"
-              onChange={(e) => setRepType(e.target.value)}
+              onChange={
+                (e) => {
+                  setSelectedRep('');
+                  setRepType(e.target.value);
+                }
+              }
             >
-              <MenuItem value='senator'>Senator</MenuItem>
-              <MenuItem value='representative'>Representative</MenuItem>
+              <MenuItem key={0} value='senator'>Senator</MenuItem>
+              <MenuItem key={1} value='representative'>Representative</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ marginBottom: '20px' }}>
             <InputLabel>What state do you live in?</InputLabel>
             <Select
               value={state}
-              label="Who would you like to contact?"
-              onChange={(e) => setState(e.target.value)}
+              label="What state do you live in?"
+              onChange={
+                (e) => {
+                  setSelectedRep('');
+                  setState(e.target.value);
+                }
+              }
             >
               {
                 states.map(s => <MenuItem value={s} key={s}>{ s }</MenuItem>)
@@ -72,26 +82,34 @@ function App() {
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ marginBottom: '20px' }}>
-            <InputLabel>Who do you want to contact?</InputLabel>
+            <InputLabel>Select a rep:</InputLabel>
             <Select
               value={selectedRep}
-              label="Who would you like to contact?"
+              label="Select a rep:"
               onChange={(e) => setSelectedRep(e.target.value)}
             >
               {
                 repType === 'senator' ?
-                senators.filter(s => s.state === state).map(s => <MenuItem value={s.id}>{ `${s.first_name} ${s.last_name}` }</MenuItem>)
+                senators.filter(s => s.state === state).map(s => <MenuItem key={s.id} value={s.id}>{ `${s.first_name} ${s.last_name}` }</MenuItem>)
                 :
-                reps.filter(r => r.state === state).map(r => <MenuItem value={r.id}>{ `${r.first_name} ${r.last_name}` }</MenuItem>)
+                reps.filter(r => r.state === state).map(r => <MenuItem key={r.id} value={r.id}>{ `${r.first_name} ${r.last_name}` }</MenuItem>)
               }
             </Select>
           </FormControl>
           {
+            selectedRep ?
+            <ContactInfo rep={ repType === 'senator' ? senators.filter(s => s.id === selectedRep)[0] : reps.filter(r => r.id === selectedRep)[0] } />
+            :
+            ''
+          }
+          <br />
+          <br />
+          {/* {
             repType === 'senator' ?
             <div dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(senators.filter(s => s.id === selectedRep)[0], null, 2, 100) }} />
             :
             <div dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(reps.filter(r => r.id === selectedRep)[0], null, 2, 100) }} />
-          }
+          } */}
         </Container>
       }
     </div>
