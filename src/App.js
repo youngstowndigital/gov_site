@@ -54,7 +54,12 @@ function App() {
             <Select
               value={repType}
               label="Who would you like to contact?"
-              onChange={(e) => setRepType(e.target.value)}
+              onChange={
+                (e) => {
+                  setSelectedRep('');
+                  setRepType(e.target.value);
+                }
+              }
             >
               <MenuItem value='senator'>Senator</MenuItem>
               <MenuItem value='representative'>Representative</MenuItem>
@@ -65,7 +70,12 @@ function App() {
             <Select
               value={state}
               label="Who would you like to contact?"
-              onChange={(e) => setState(e.target.value)}
+              onChange={
+                (e) => {
+                  setSelectedRep('');
+                  setState(e.target.value);
+                }
+              }
             >
               {
                 states.map(s => <MenuItem value={s} key={s}>{ s }</MenuItem>)
