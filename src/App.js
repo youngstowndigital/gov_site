@@ -104,12 +104,12 @@ function App() {
           }
           <br />
           <br />
-          {
+          {/* {
             repType === 'senator' ?
             <div dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(senators.filter(s => s.id === selectedRep)[0], null, 2, 100) }} />
             :
             <div dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(reps.filter(r => r.id === selectedRep)[0], null, 2, 100) }} />
-          }
+          } */}
         </Container>
       }
     </div>
