@@ -48,8 +48,7 @@ function App() {
         <CircularProgress sx={{ display: 'block', margin: '40vh auto 0 auto' }} />
         :
         <Container maxWidth="lg">
-          <Typography variant='h2' sx={{ marginTop: '20px' }}>Gov Site</Typography>
-          <FormControl fullWidth sx={{ marginBottom: '20px', marginTop: '10px' }}>
+          <FormControl fullWidth sx={{ marginBottom: '20px', marginTop: '40px' }}>
             <InputLabel>Who would you like to contact?</InputLabel>
             <Select
               value={repType}
@@ -69,7 +68,7 @@ function App() {
             <InputLabel>What state do you live in?</InputLabel>
             <Select
               value={state}
-              label="Who would you like to contact?"
+              label="What state do you live in?"
               onChange={
                 (e) => {
                   setSelectedRep('');
@@ -83,10 +82,10 @@ function App() {
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ marginBottom: '20px' }}>
-            <InputLabel>Who do you want to contact?</InputLabel>
+            <InputLabel>Select a rep:</InputLabel>
             <Select
               value={selectedRep}
-              label="Who would you like to contact?"
+              label="Select a rep:"
               onChange={(e) => setSelectedRep(e.target.value)}
             >
               {
