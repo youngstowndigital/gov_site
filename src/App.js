@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { prettyPrintJson } from 'pretty-print-json';
-import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { getReps, getSenators } from './apiUtil';
 import { Container } from '@mui/system';
@@ -35,38 +35,51 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
-            Photos
+            Gov Site
           </Typography>
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg">
-        <h1>Gov Site</h1>
-        <label>Who would you like to contact?</label>
-        <br />
-        <select value={repType} onChange={(e) => setRepType(e.target.value)}>
-          <option value='senator'>Senator</option>
-          <option value='representative'>Representative</option>
-        </select>
-        <br />
-        <label>What state do you live in?</label>
-        <br />
-        <select value={state} onChange={(e) => setState(e.target.value)}>
-          {
-            states.map(s => <option value={s} key={s}>{ s }</option>)
-          }
-        </select>
-        <br />
-        <label>Which rep would you like to contact?</label>
-        <br />
-        <select value={selectedRep} onChange={(e) => setSelectedRep(e.target.value)}>
-          <option>Select:</option>
-          {
-            repType === 'senator' ?
-            senators.filter(s => s.state === state).map(s => <option value={s.id}>{ `${s.first_name} ${s.last_name}` }</option>)
-            :
-            reps.filter(r => r.state === state).map(r => <option value={r.id}>{ `${r.first_name} ${r.last_name}` }</option>)
-          }
-        </select>
+        <Typography variant='h2'>Gov Site</Typography>
+        <FormControl fullWidth sx={{ marginBottom: '20px', marginTop: '10px' }}>
+          <InputLabel>Who would you like to contact?</InputLabel>
+          <Select
+            value={repType}
+            label="Who would you like to contact?"
+            onChange={(e) => setRepType(e.target.value)}
+          >
+            <MenuItem value='senator'>Senator</MenuItem>
+            <MenuItem value='representative'>Representative</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth sx={{ marginBottom: '20px' }}>
+          <InputLabel>What state do you live in?</InputLabel>
+          <Select
+            value={state}
+            label="Who would you like to contact?"
+            onChange={(e) => setState(e.target.value)}
+          >
+            {
+              states.map(s => <MenuItem value={s} key={s}>{ s }</MenuItem>)
+            }
+          </Select>
+        </FormControl>
+        <FormControl fullWidth sx={{ marginBottom: '20px' }}>
+          <InputLabel>What state do you live in?</InputLabel>
+          <Select
+            value={selectedRep}
+            label="Who would you like to contact?"
+            onChange={(e) => setSelectedRep(e.target.value)}
+          >
+            <MenuItem>Select:</MenuItem>
+            {
+              repType === 'senator' ?
+              senators.filter(s => s.state === state).map(s => <MenuItem value={s.id}>{ `${s.first_name} ${s.last_name}` }</MenuItem>)
+              :
+              reps.filter(r => r.state === state).map(r => <MenuItem value={r.id}>{ `${r.first_name} ${r.last_name}` }</MenuItem>)
+            }
+          </Select>
+        </FormControl>
         {
           repType === 'senator' ?
           <div dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(senators.filter(s => s.id === selectedRep)[0], null, 2, 100) }} />
