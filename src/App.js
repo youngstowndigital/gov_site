@@ -61,8 +61,8 @@ function App() {
                 }
               }
             >
-              <MenuItem value='senator'>Senator</MenuItem>
-              <MenuItem value='representative'>Representative</MenuItem>
+              <MenuItem key={0} value='senator'>Senator</MenuItem>
+              <MenuItem key={1} value='representative'>Representative</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ marginBottom: '20px' }}>
@@ -91,9 +91,9 @@ function App() {
             >
               {
                 repType === 'senator' ?
-                senators.filter(s => s.state === state).map(s => <MenuItem value={s.id}>{ `${s.first_name} ${s.last_name}` }</MenuItem>)
+                senators.filter(s => s.state === state).map(s => <MenuItem key={s.id} value={s.id}>{ `${s.first_name} ${s.last_name}` }</MenuItem>)
                 :
-                reps.filter(r => r.state === state).map(r => <MenuItem value={r.id}>{ `${r.first_name} ${r.last_name}` }</MenuItem>)
+                reps.filter(r => r.state === state).map(r => <MenuItem key={r.id} value={r.id}>{ `${r.first_name} ${r.last_name}` }</MenuItem>)
               }
             </Select>
           </FormControl>
