@@ -4,6 +4,7 @@ import { AppBar, Toolbar, IconButton, Typography, FormControl, InputLabel, Selec
 import MenuIcon from '@mui/icons-material/Menu';
 import { getReps, getSenators } from './apiUtil';
 import { Container } from '@mui/system';
+import ContactInfo from './components/ContactInfo';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -86,6 +87,14 @@ function App() {
               }
             </Select>
           </FormControl>
+          {
+            selectedRep ?
+            <ContactInfo rep={ repType === 'senator' ? senators.filter(s => s.id === selectedRep)[0] : reps.filter(r => r.id === selectedRep)[0] } />
+            :
+            ''
+          }
+          <br />
+          <br />
           {
             repType === 'senator' ?
             <div dangerouslySetInnerHTML={{ __html: prettyPrintJson.toHtml(senators.filter(s => s.id === selectedRep)[0], null, 2, 100) }} />
